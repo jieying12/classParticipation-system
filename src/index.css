@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  font-size: 1.1em;
+}
+ul, li, p, h1, h2, h3, h4 {
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style-type: none;
+}
+.btn {
+  background: none;
+  border: 2px solid #8f6414;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #e2ad5e;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1em;
+}
+.btn:hover {
+  background: #e4bc8f;
+  color: #fff;
+}
