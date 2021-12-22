@@ -11,15 +11,15 @@ ul {
 }
 .btn {
   background: none;
-  border: 2px solid #8f6414;
+  border: 2px solid #774f12;
   padding: 6px 12px;
   border-radius: 4px;
-  color: #e2ad5e;
+  color: #ad7c21;
   font-weight: bold;
   cursor: pointer;
   font-size: 1em;
 }
 .btn:hover {
-  background: #e4bc8f;
+  background: #e2b052;
   color: #fff;
 }
