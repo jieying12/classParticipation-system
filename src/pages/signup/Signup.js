@@ -22,7 +22,7 @@ export default function Signup() {
       email,
       password,
       displayName,
-      role
+      role,
     });
   }
 

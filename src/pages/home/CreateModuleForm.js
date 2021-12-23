@@ -1,19 +1,26 @@
 import { useState, useEffect } from 'react'
 import { useFirestore } from '../../hooks/useFirestore'
 
-export default function ModuleForm({ uid }) {
+export default function ModuleForm({ uid }) { //for professors' use only, students have separate view: no validation required
   const [name, setName] = useState('');
+  const [studentName] = useState('');
+  const [studentScore] = useState(0);
   const [semester, setSemester] = useState(1);
   const [year, setYear] = useState(1);
-  const { addDocument, response } = useFirestore('modules')
+  const { addDocument, response } = useFirestore('modules');
+  const [students] = useState([]);
+  const [studentCount] = useState(0); //by default 0
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     addDocument({
       uid,
       name,
       semester,
-    })
+      year,
+      students,
+      studentCount,
+    });
   }
 
   // reset the form fields
