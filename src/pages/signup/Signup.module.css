@@ -11,6 +11,14 @@
   display: block;
   margin-bottom: 6px;
 }
+.signup-form select {
+  display: block;
+  box-sizing: border-box;
+  padding: 10px;
+  margin-bottom: 6px;
+  font-size: 1em;
+  width: 105%;
+}
 .signup-form input {
   padding: 8px 6px;
   font-size: 1em;
