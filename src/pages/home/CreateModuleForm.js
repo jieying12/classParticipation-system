@@ -2,15 +2,16 @@ import { useState, useEffect } from 'react'
 import { useFirestore } from '../../hooks/useFirestore'
 
 export default function ModuleForm({ uid }) {
-  const [name, setName] = useState('')
-  const [semester, setSemester] = useState('')
+  const [name, setName] = useState('');
+  const [semester, setSemester] = useState(1);
+  const [year, setYear] = useState(1);
   const { addDocument, response } = useFirestore('modules')
 
   const handleSubmit = (e) => {
     e.preventDefault()
     addDocument({
-      uid, 
-      name, 
+      uid,
+      name,
       semester,
     })
   }
@@ -19,7 +20,8 @@ export default function ModuleForm({ uid }) {
   useEffect(() => {
     if (response.success) {
       setName('')
-      setSemester('')
+      setYear(1)
+      setSemester(1)
     }
   }, [response.success])
 
@@ -29,21 +31,38 @@ export default function ModuleForm({ uid }) {
       <form onSubmit={handleSubmit}>
         <label>
           <span>Module name:</span>
-          <input 
+          <input
             type="text"
             required
-            onChange={(e) => setName(e.target.value)} 
-            value={name} 
+            onChange={(e) => setName(e.target.value)}
+            value={name}
           />
         </label>
         <label>
+          <span>Year</span>
+          <select
+            onChange={(e) => setYear(e.target.value)}
+            value={year}
+          >
+            <option value="1">Year 1</option>
+            <option value="2">Year 2</option>
+            <option value="3">Year 3</option>
+            <option value="4">Year 4</option>
+            <option value="5">Year 5</option>
+          </select>
+        </label>
+        <label>
           <span>Semester:</span>
-          <input
-            type="number"
+          <select
             required
-            onChange={(e) => setSemester(e.target.value)} 
-            value={semester} 
-          />
+            onChange={(e) => setSemester(e.target.value)}
+            value={semester}
+          >
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Special Term 1</option>
+            <option value="4">Special Term 2</option>
+          </select>
         </label>
         <button>Add Module</button>
       </form>
