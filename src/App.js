@@ -14,11 +14,9 @@ import Module from './pages/module/Module'
 function App() {
   const { authIsReady, user } = useAuthContext();
 
-  if (authIsReady) {
-    console.log("logged in user is ", user.uid); //retrieving for routing purposes
+  if (authIsReady === true && user !== null) {
+    console.log(user.uid);
   }
-
-  console.log(uId);
 
   return (
     <div className="App">
