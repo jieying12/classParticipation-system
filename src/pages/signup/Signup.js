@@ -7,7 +7,6 @@ import styles from './Signup.module.css'
 
 export default function Signup() {
   const [email, setEmail] = useState('')
-  const uId = email;
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [role, setRole] = useState(1)
@@ -16,14 +15,15 @@ export default function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    signup(email, password, displayName)
-    addDocument({
-      uId,
-      email,
-      password,
-      displayName,
-      role,
-    });
+    signup(email, password, displayName, role)
+
+    // addDocument({
+    //   uId,
+    //   email,
+    //   password,
+    //   displayName,
+    //   role,
+    // });
   }
 
   useEffect(() => {
