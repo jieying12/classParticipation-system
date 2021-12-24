@@ -5,6 +5,7 @@ import { useAuthContext } from './hooks/useAuthContext'
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
 import Signup from './pages/signup/Signup'
+import ProfSignup from './pages/signup/ProfSignup'
 import Navbar from './components/Navbar'
 import Module from './pages/module/Module'
 
@@ -32,6 +33,10 @@ function App() {
             <Route path="/signup">
               {user && user.displayName && <Redirect to="/" />}
               {!user && <Signup />}
+            </Route>
+            <Route path="/signupProf">
+              {user && user.displayName && <Redirect to="/" />}
+              {!user && <ProfSignup />}
             </Route>
           </Switch>
         </BrowserRouter>

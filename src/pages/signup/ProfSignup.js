@@ -3,15 +3,15 @@ import { useSignup } from '../../hooks/useSignup'
 import { useFirestore } from '../../hooks/useFirestore'
 
 // styles
-import styles from './Signup.module.css'
+import styles from './ProfSignup.module.css'
 
-export default function Signup() {
+export default function ProfSignup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [uId] = email;
   const { signup, isPending, error } = useSignup()
-  const { addDocument, response } = useFirestore('students')
+  const { addDocument, response } = useFirestore('professors')
 
   const handleSubmit = (e) => {
     e.preventDefault()
