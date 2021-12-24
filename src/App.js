@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
+import { useState } from 'react'
+import { useParams } from "react-router-dom"
 
 // pages & components
 import Home from './pages/home/Home'
@@ -10,7 +12,10 @@ import Navbar from './components/Navbar'
 import Module from './pages/module/Module'
 
 function App() {
-  const { authIsReady, user } = useAuthContext()
+  const { authIsReady, user } = useAuthContext();
+  if (authIsReady) {
+    console.log("logged in user is ", user.uid);
+  }
 
   return (
     <div className="App">
