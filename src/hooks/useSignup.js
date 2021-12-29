@@ -8,7 +8,8 @@ export const useSignup = () => {
   const [error, setError] = useState(null)
   const [isPending, setIsPending] = useState(false)
   const { dispatch } = useAuthContext()
-  const { addDocument, response } = useFirestore('students')
+  const { addDocument : addStudentDocument } = useFirestore('students')
+  const { addDocument : addProfessorDocument } = useFirestore('professors')
 
   const signup = async (email, password, displayName, role) => {
     setError(null)
@@ -23,13 +24,22 @@ export const useSignup = () => {
 
       await res.user.updateProfile({ displayName })
       const uId = res.user.uid
-      addDocument({
-        uId,
-        email,
-        password,
-        displayName,
-        role,
-      });
+
+      if (role == 'students') {
+        addStudentDocument({
+          uId,
+          email,
+          password,
+          displayName
+        });
+      } else {
+        addProfessorDocument({
+          uId,
+          email,
+          password,
+          displayName
+        });
+      }
 
       dispatch({ type: 'LOGIN', payload: res.user })
 

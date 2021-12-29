@@ -9,20 +9,21 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [uId] = email;
+  // const uId = email;
   const { signup, isPending, error } = useSignup()
   const { addDocument, response } = useFirestore('students')
+  const role = 'students'
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    signup(email, password, displayName)
+    signup(email, password, displayName, role)
 
-    addDocument({
-      uId,
-      email,
-      password,
-      displayName,
-    });
+    // localStorage.setItem("currentUser", JSON.stringify({
+    //   uId,
+    //   email,
+    //   password,
+    //   displayName,
+    // }));
 
   }
 
