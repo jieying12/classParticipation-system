@@ -21,11 +21,11 @@ export default function Module() {
     }
 
     return (
-        <div className={styles.module}>
-            <>
+        <>
+            <div className={styles.module}>
                 <h2 className="page-title">{document.name}</h2>
                 <p>Year {document.year} Semester {document.semester}</p>
-                <p>Number of Students: {document.studentCount}</p>
+                <p>Number of Students: {document.students.length}</p>
                 <p>{Array.from(document.students).map((student) => (
                     <div key={student.id}>
                         <h1>{student.studentName}</h1>
@@ -34,8 +34,13 @@ export default function Module() {
                     </div>
                 ))}
                 </p>
-            </>
-        </div>
+                {/* style */}
+                <div className={''}>
+                    <AddStudentForm module={document} />
+                </div>
+
+            </div>
+        </>
     );
 
     /*
