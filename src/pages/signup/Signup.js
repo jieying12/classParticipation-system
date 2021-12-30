@@ -12,7 +12,7 @@ export default function Signup() {
   // const uId = email;
   const { signup, isPending, error } = useSignup()
   const { addDocument, response } = useFirestore('students')
-  const role = 'students'
+  const role = 'student'
 
   const handleSubmit = (e) => {
     e.preventDefault()

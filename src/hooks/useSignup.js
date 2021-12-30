@@ -8,13 +8,13 @@ export const useSignup = () => {
   const [error, setError] = useState(null)
   const [isPending, setIsPending] = useState(false)
   const { dispatch } = useAuthContext()
-  const { addDocument : addStudentDocument } = useFirestore('students')
-  const { addDocument : addProfessorDocument } = useFirestore('professors')
+  const { addDocument: addStudentDocument } = useFirestore('students')
+  const { addDocument: addProfessorDocument } = useFirestore('professors')
 
   const signup = async (email, password, displayName, role) => {
     setError(null)
     setIsPending(true)
-  
+
     try {
       const res = await projectAuth.createUserWithEmailAndPassword(email, password)
 
@@ -24,31 +24,29 @@ export const useSignup = () => {
 
       await res.user.updateProfile({ displayName })
       const uId = res.user.uid
-
-      if (role == 'students') {
-        addStudentDocument({
-          uId,
-          email,
-          password,
-          displayName
-        });
-      } else {
-        addProfessorDocument({
-          uId,
-          email,
-          password,
-          displayName
-        });
+      const userToBeAdded = {
+        uId,
+        email,
+        password,
+        displayName,
+        role
       }
 
+      if (role == 'student') {
+        addStudentDocument(userToBeAdded);
+      } else {
+        addProfessorDocument(userToBeAdded);
+      }
+
+      localStorage.setItem('currUser', JSON.stringify(userToBeAdded))
       dispatch({ type: 'LOGIN', payload: res.user })
 
       if (!isCancelled) {
         setIsPending(false)
         setError(null)
       }
-    } 
-    catch(err) {
+    }
+    catch (err) {
       if (!isCancelled) {
         setError(err.message)
         setIsPending(false)

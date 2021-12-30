@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
 import { useEffect, useState } from 'react'
-import { useParams } from "react-router-dom"
-import { query, where } from "firebase/firestore";
+import { projectFirestore } from "./firebase/config"
 
 // pages & components
 import Home from './pages/home/Home'
@@ -12,22 +11,26 @@ import ProfSignup from './pages/signup/ProfSignup'
 import Navbar from './components/Navbar'
 import Module from './pages/module/Module'
 import { useCollection } from './hooks/useCollection';
+import { useDocument } from './hooks/useDocument'
 
 function App() {
   const { authIsReady, user } = useAuthContext();
-  const [userId, setUserId] = useState("");
-  const profRef = useCollection("professors");
+  // const [userId, setUserId] = useState("");
 
-  useEffect(() => {
-    if (authIsReady === true && user !== null) {
-      console.log(user.uid);
-      setUserId(user.uid);
-    }
-  }, []);
-
-  console.log("Professors ", profRef.documents)
-  //To iterate through professors to find whether account exists
-  console.log(userId);
+  if (authIsReady && user != null) {
+    console.log("Current user's ID is " + user.uid)
+    projectFirestore.collection('professors').where('uId', '==', user.uid)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const currUser = doc.data()
+        localStorage.setItem('currUser', JSON.stringify(currUser))
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+  }
 
   return (
     <div className="App">
