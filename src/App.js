@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
-import { useEffect, useState } from 'react'
 import { projectFirestore } from "./firebase/config"
 
 // pages & components
@@ -18,18 +17,33 @@ function App() {
   // const [userId, setUserId] = useState("");
 
   if (authIsReady && user != null) {
+    let currUser = null;
     console.log("Current user's ID is " + user.uid)
     projectFirestore.collection('professors').where('uId', '==', user.uid)
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const currUser = doc.data()
-        localStorage.setItem('currUser', JSON.stringify(currUser))
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          currUser = doc.data()
+          localStorage.setItem('currUser', JSON.stringify(currUser))
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting professor documents: ", error);
       });
-    })
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
-    });
+
+    if (currUser == null) {
+      projectFirestore.collection('students').where('uId', '==', user.uid)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            currUser = doc.data()
+            localStorage.setItem('currUser', JSON.stringify(currUser))
+          });
+        })
+        .catch((error) => {
+          console.log("Error getting student documents: ", error);
+        });
+    }
   }
 
   return (

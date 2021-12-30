@@ -28,7 +28,7 @@ export default function Module() {
                 <p>Number of Students: {document.students.length}</p>
                 <p>{Array.from(document.students).map((student) => (
                     <div key={student.id}>
-                        <h1>{student.studentName}</h1>
+                        <h1>{student.displayName}</h1>
                         <p>{student.studentScore}</p>
                         <hr />
                     </div>
