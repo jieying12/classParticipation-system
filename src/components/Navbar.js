@@ -13,7 +13,7 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <Link to="#" className="menu-bars">
         <ul>
-          <li className={styles.title}>Class Participation Records</li>
+          <li className={styles.title}><Link to="/">Class Participation Records</Link></li>
 
           {!user && (
             <>
