@@ -18,17 +18,17 @@ export default function Home() {
     'modules', ["uid", "==", user.uid], ['createdAt', 'desc']
   )
 
-  const { documentStudents } = useCollection(
-    'students', ["email", "==", user.email]
+  const { documents: documentStudents } = useCollection(
+    'students', ["uId", "==", user.uid]
   )
 
-  useEffect(() => {
-    if (documentStudents) {
-      setStudents(documentStudents.map(student => {
-        return { value: student, label: student.displayName }
-      }));
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (documentStudents) {
+  //     setStudents(documentStudents.map(student => {
+  //       return { value: student, label: student.displayName }
+  //     }));
+  //   }
+  // }, [documentStudents])
 
   return (
     <div className={styles.container}>
@@ -37,7 +37,7 @@ export default function Home() {
         {documents && <ModuleList modules={documents} />}
       </div>
       <div className={styles.sidebar}>
-        {students !== undefined && students.length === 0 && <ModuleForm uid={user.uid} />}
+        { documentStudents && documentStudents.length === 0 && <ModuleForm uid={user.uid} />}
       </div>
     </div>
   )
