@@ -12,17 +12,16 @@ import { useState } from 'react'
 
 export default function Home() {
   const { user } = useAuthContext()
-  const [students, setStudents] = useState([])
-
-  const { documents, error } = useCollection(
-    'modules', ["uid", "==", user.uid], ['createdAt', 'desc']
-  )
 
   const { documents: documentStudents } = useCollection(
     'students', ["uId", "==", user.uid]
   )
 
-  // useEffect(() => {
+  const { documents, error } = useCollection(
+    'modules', ["uid", "==", user.uid], ['createdAt', 'desc']
+  )
+
+  // useEffect(() => 
   //   if (documentStudents) {
   //     setStudents(documentStudents.map(student => {
   //       return { value: student, label: student.displayName }
@@ -30,11 +29,14 @@ export default function Home() {
   //   }
   // }, [documentStudents])
 
+  console.log("hi" + documentStudents)
+  console.log("hiee" + documents)
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         {error && <p>{error}</p>}
-        {documents && <ModuleList modules={documents} />}
+        {documents && <ModuleList modules={documents} /> }
+        {documentStudents && documentStudents.length != 0 && documentStudents[0].modules.length != 0 && <ModuleList modules={documentStudents[0].modules} /> }
       </div>
       <div className={styles.sidebar}>
         { documentStudents && documentStudents.length === 0 && <ModuleForm uid={user.uid} />}

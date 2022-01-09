@@ -8,7 +8,8 @@ import 'firebase/firestore';
 export default function AddStudentForm({ module }) {
     const [students, setStudents] = useState([])
     const { documents } = useCollection('students')
-    const { updateDocument, response } = useFirestore('modules');
+    const { updateDocument : updateModuleDocument, response } = useFirestore('modules');
+    const { updateDocument : updateStudentDocument } = useFirestore('students');
 
     // form fields
     const [selectedStudents, setSelectedStudents] = useState([])
@@ -41,7 +42,15 @@ export default function AddStudentForm({ module }) {
             }
         })
 
-        await updateDocument(module.id, {
+        selectedStudents.forEach(function (s, index) {
+            const sId = s.value.id
+            console.log('student ID is ' + sId)
+            updateStudentDocument(sId, {
+                modules: [...s.value.modules, module],
+            })
+        });
+
+        await updateModuleDocument(module.id, {
             students: [...module.students, ...selectedStudentsList],
         })
     }

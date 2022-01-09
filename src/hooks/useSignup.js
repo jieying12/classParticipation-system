@@ -33,7 +33,7 @@ export const useSignup = () => {
       }
 
       if (role == 'student') {
-        addStudentDocument(userToBeAdded);
+        addStudentDocument({...userToBeAdded, modules: []});
       } else {
         addProfessorDocument(userToBeAdded);
       }
