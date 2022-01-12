@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDocument } from '../../hooks/useDocument'
 import { useFirestore } from "../../hooks/useFirestore"
-import { db } from 'firebase/firebase-remote-config'
+import firebase from 'firebase/app'
 
 // styles
 import styles from './Module.module.css'
@@ -12,6 +12,31 @@ export default function Module() {
     const { id } = useParams()
     const { updateDocument } = useFirestore('modules')
     const { document, error } = useDocument('modules', id)
+
+    const handleUpdate = async (student, increase) => {
+        let newScore = 0
+        if (increase) {
+            newScore = student.studentScore + 1
+        } else {
+            newScore = student.studentScore - 1
+        }
+
+        await updateDocument(id, {
+            students: firebase.firestore.FieldValue.arrayRemove(student)
+        })
+
+        const updatedStudent = {
+            displayName: student.displayName,
+            email: student.email,
+            uId: student.uId,
+            studentScore: newScore,
+            comments: student.comments
+        };
+
+        await updateDocument(id, {
+            students: firebase.firestore.FieldValue.arrayUnion(updatedStudent)
+        })
+    }
 
     if (error) {
         return <div className="error">{error}</div>
@@ -30,6 +55,14 @@ export default function Module() {
                     <div key={student.id}>
                         <h1>{student.displayName}</h1>
                         <p>{student.studentScore}</p>
+                        <button onClick={() => {
+                            handleUpdate(student, true)
+                        }}>
+                            Increase Participation </button>
+                        <button onClick={() => {
+                            handleUpdate(student, false)
+                        }}>
+                            Decrease Participation </button>
                         <hr />
                     </div>
                 ))}
